@@ -59,12 +59,12 @@ export const SOLUTIONS = [...WORD_LIST];
 export const WORD_LENGTH = 5;
 export const MAX_GUESSES = 6;
 
-export function getRandomSolution() {
+export function getRandomWord() {
     const randomIndex = Math.floor(Math.random() * SOLUTIONS.length);
     
     if (!SOLUTIONS || !SOLUTIONS.length) {
         // console.error("Solutions array is empty.");
-        throw new Error("No solutions available.");
+        throw new Error("No words available.");
     }
 
     const randomWord = SOLUTIONS[randomIndex].toUpperCase();
@@ -74,5 +74,6 @@ export function getRandomSolution() {
 
 export function isValidGuess(word: string) {
     if (word.length !== WORD_LENGTH) return false;
-    
+    const validWordsSet = new Set([...VALID_GUESSES]);
+    return validWordsSet.has(word.toLowerCase());
 }

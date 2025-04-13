@@ -1,0 +1,46 @@
+.tile {
+    width: 4rem;
+    height: 4rem;
+    border: 2px solid hsl(214, 16%, 83%);
+    color: black;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0.5rem;
+    box-sizing: border-box;
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.empty {
+    background-color: white;
+    border-color: hsl(214, 16%, 83%);
+}
+
+.typing {
+    background-color: white;
+    border-color: hsl(200, 3%, 65%);
+    transform: scale(1.03);
+}
+
+.absent {
+    background-color: hsl(210, 1%, 53%);
+    border-color: hsl(210, 1%, 53%);
+    color: white;
+}
+
+.present {
+    background-color: hsl(60, 80%, 38%);
+    border-color: hsl(60, 80%, 38%);
+    color: white;
+}
+
+.correct {
+  background-color: hsl(115, 57%, 52%); 
+  border-color: hsl(115, 57%, 52%); 
+  color: white;
+}
+
+/* animations? */

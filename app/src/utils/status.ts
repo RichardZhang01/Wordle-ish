@@ -18,10 +18,12 @@ export function calculateGuessStatus(guess: string, solution: string) {
     });
 
     guessLetters.forEach((letter: string, index: number) => {
-        if (statuses[index] === "correct") return;
+        if (statuses[index] === "correct" || !letterCounts[letter] || letterCounts[letter] <= 0) return;
         if (solutionLetters.includes(letter) && letterCounts[letter] > 0) {
             statuses[index] = "present";
             letterCounts[letter]--;
         }
-    }   );
+    });
+
+    return statuses;
 }
