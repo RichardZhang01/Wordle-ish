@@ -1,11 +1,12 @@
 import styles from "./page.module.css";
-import Tile from "@/components/Tile";
+import Row from "@/components/Row";
 
 export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <Tile letter="A" />
+        <Row guess='hello'/>
+        <Row guess='world'/>
       </main>
     </div>
   );

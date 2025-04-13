@@ -9,7 +9,7 @@
     font-size: 2rem;
     font-weight: bold;
     text-transform: uppercase;
-    margin: 0.5rem;
+    margin-inline: 0.35rem;
     box-sizing: border-box;
     transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }

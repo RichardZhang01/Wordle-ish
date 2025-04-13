@@ -1,6 +1,11 @@
 import styles from "@/styles/Tile.module.css";
 
-export default function Tile({letter = '', status = 'empty'}) {
+interface TileProps {
+    letter?: string;
+    status?: 'correct' | 'present' | 'typing' | 'absent' | 'empty';
+}
+
+export default function Tile({letter = '', status = 'empty'}: TileProps) {
     const statusClass = styles[status] || styles.empty;
 
     return (
