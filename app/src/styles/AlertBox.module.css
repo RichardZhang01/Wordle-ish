@@ -1,0 +1,14 @@
+.alertBox {
+    position: fixed;
+    top: 4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    color: black;
+    padding: 1rem 2rem;
+    border-radius: 0.2rem;
+    z-index: 1000;
+    min-width: 10rem;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
