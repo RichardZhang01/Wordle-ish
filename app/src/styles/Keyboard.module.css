@@ -1,0 +1,54 @@
+.keyboard {
+    margin-top: 0.2rem;
+    user-select: none;
+}
+
+.keyboardRow {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.2rem;
+}
+
+.key,
+.specialKey {
+    font-family: inherit;
+    font-weight: bold;
+    border: 0;
+    padding: 0;
+    margin: 0 0.1rem;
+    height: 2rem;
+    border-radius: 0.1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: hsl(214, 9%, 84%);
+    color: hsl(240, 2%, 10%);
+    flex: 1;
+    text-transform: background-color 0.1s ease-in-out, color 0.1s ease;
+}
+
+.key:hover,
+.specialKey:hover {
+    background-color: hsl(210, 4%, 73%);
+}
+
+.specialKey {
+    flex: 1.5;
+    font-size: 1rem;
+}
+
+.absent {
+    background-color: hsl(210, 1%, 53%);
+    color: white;
+}
+
+.present {
+    background-color: hsl(60, 80%, 38%);
+    color: white;
+}
+
+.correct {
+    background-color: hsl(115, 57%, 52%);
+    color: white;
+}
