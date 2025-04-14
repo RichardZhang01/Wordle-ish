@@ -6,7 +6,7 @@ interface RowProps {
     guess?: string;
     statuses?: string[];
     isCurrent?: boolean;
-}
+};
 
 export default function Row({ guess ='', statuses = [], isCurrent = false }: RowProps) {
     const tiles = [];
@@ -16,7 +16,7 @@ export default function Row({ guess ='', statuses = [], isCurrent = false }: Row
         const status = (statuses[i] as 'correct' | 'present' | 'typing' | 'absent' | 'empty') || 
             (isCurrent && letter ? 'typing' : 'empty');
         tiles.push(<Tile key={i} letter={letter} status={status} />);
-    }
+    };
 
     return <div className={styles.row}>{tiles}</div>
-}
+};

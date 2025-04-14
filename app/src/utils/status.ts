@@ -14,7 +14,7 @@ export function calculateGuessStatus(guess: string, solution: string) {
         if (letter === solution[index]) {
             statuses[index] = "correct";
             letterCounts[letter]--;
-        }
+        };
     });
 
     guessLetters.forEach((letter: string, index: number) => {
@@ -22,8 +22,8 @@ export function calculateGuessStatus(guess: string, solution: string) {
         if (solutionLetters.includes(letter) && letterCounts[letter] > 0) {
             statuses[index] = "present";
             letterCounts[letter]--;
-        }
+        };
     });
 
     return statuses;
-}
+};
