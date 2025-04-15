@@ -26,21 +26,18 @@
 }
 
 .absent {
-    background-color: hsl(210, 1%, 53%);
-    border-color: hsl(210, 1%, 53%);
-    color: white;
+    background-color: hsl(0, 0%, 69%);
+    border-color: hsl(0, 0%, 69%);
 }
 
 .present {
-    background-color: hsl(60, 80%, 38%);
-    border-color: hsl(60, 80%, 38%);
-    color: white;
+    background-color: yellow;
+    border-color: yellow;
 }
 
 .correct {
   background-color: hsl(115, 57%, 52%); 
   border-color: hsl(115, 57%, 52%); 
-  color: white;
 }
 
 /* animations? */

@@ -39,16 +39,13 @@
 }
 
 .absent {
-    background-color: hsl(210, 1%, 53%);
-    color: white;
+    background-color: hsl(0, 0%, 69%);;
 }
 
 .present {
-    background-color: hsl(60, 80%, 38%);
-    color: white;
+    background-color: yellow;
 }
 
 .correct {
     background-color: hsl(115, 57%, 52%);
-    color: white;
 }
