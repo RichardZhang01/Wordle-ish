@@ -1,9 +1,9 @@
 .alertBox {
     position: fixed;
-    top: 4rem;
+    top: 6rem;
     left: 50%;
     transform: translateX(-50%);
-    background-color: white;
+    background-color: orange;
     color: black;
     padding: 1rem 2rem;
     border-radius: 0.2rem;

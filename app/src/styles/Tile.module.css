@@ -15,8 +15,8 @@
 }
 
 .empty {
-    background-color: white;
-    border-color: hsl(214, 16%, 83%);
+    /* background-color: white; */
+    border-color: hsl(210, 1%, 54%);
 }
 
 .typing {

@@ -53,7 +53,6 @@ export const WORD_LIST = [
     "siren", "torch", "ultra", "vocal", "waltz", "xylos", "yacht", "zonal",
 ];
 
-export const VALID_GUESSES = [...WORD_LIST];
 export const SOLUTIONS = [...WORD_LIST];
 
 export const WORD_LENGTH = 5;
@@ -70,10 +69,4 @@ export function getRandomWord() {
     const randomWord = SOLUTIONS[randomIndex].toUpperCase();
     // console.log(`Random word selected: ${randomWord}`);
     return randomWord;
-}
-
-export function isValidGuess(word: string) {
-    if (word.length !== WORD_LENGTH) return false;
-    const validWordsSet = new Set([...VALID_GUESSES]);
-    return validWordsSet.has(word.toLowerCase());
 }

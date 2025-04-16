@@ -5,13 +5,8 @@ import Head from "next/head";
 import Board from "@/components/Board";
 import Keyboard from "@/components/Keyboard";
 import AlertBox from "@/components/AlertBox";
-import { useState, useEffect, useCallback } from "react";
-import {
-    getRandomWord,
-    // isValidGuess,
-    WORD_LENGTH,
-    MAX_GUESSES,
-} from "@/utils/words";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { getRandomWord, WORD_LENGTH, MAX_GUESSES } from "@/utils/words";
 import { calculateGuessStatus } from "@/utils/status";
 
 export default function Home() {
@@ -19,16 +14,14 @@ export default function Home() {
     const [guesses, setGuesses] = useState<string[]>([]);
     const [currentGuess, setCurrentGuess] = useState<string>("");
     const [guessStatuses, setGuessStatuses] = useState<string[][]>([]);
-    const [gameState, setGameState] = useState<"playing" | "won" | "lost">(
-        "playing"
-    );
+    const [gameState, setGameState] = useState<
+        "playing" | "won" | "lost" | "validating"
+    >("playing");
     const [keyStatuses, setKeyStatuses] = useState<{
         [key: string]: "correct" | "present" | "absent";
     }>({});
     const [alertMessage, setAlertMessage] = useState<string>("");
-    const [messageTimeout, setMessageTimeout] = useState<NodeJS.Timeout | null>(
-        null
-    );
+    const messageTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     const resetGame = useCallback(() => {
         setSolution(getRandomWord());
@@ -38,30 +31,33 @@ export default function Home() {
         setGameState("playing");
         setKeyStatuses({});
         setAlertMessage("");
-        if (messageTimeout) {
-            clearTimeout(messageTimeout);
-            setMessageTimeout(null);
+        if (messageTimeoutRef.current) {
+            clearTimeout(messageTimeoutRef.current);
+            messageTimeoutRef.current = null;
         }
         // TODO: localStorage, save state, save stats?
-        console.log("New game started. New word:", solution);
-    }, [messageTimeout]);
+        // console.log("New game started. New word:", solution);
+    }, []);
 
     const displayMessage = useCallback(
         (message: string, duration: number = 1500) => {
             setAlertMessage(message);
-            if (messageTimeout) {
-                clearTimeout(messageTimeout);
-            }
-            const newTimeout = setTimeout(() => setAlertMessage(""), duration);
-            setMessageTimeout(newTimeout);
+            if (messageTimeoutRef.current)
+                clearTimeout(messageTimeoutRef.current);
+
+            messageTimeoutRef.current = setTimeout(() => {
+                setAlertMessage("");
+                messageTimeoutRef.current = null;
+            }, duration);
         },
-        [messageTimeout]
+        []
     );
 
-    useEffect(() => resetGame(), []);
+    useEffect(() => {
+        resetGame();
+    }, [resetGame]);
 
-    const handleSubmit = useCallback(() => {
-        console.log(currentGuess);
+    const handleSubmit = useCallback(async () => {
         if (gameState !== "playing") return;
 
         // valudation
@@ -70,16 +66,43 @@ export default function Home() {
             return;
         }
 
-        // assuming all guesses are valid atm
-        // if (!isValidGuess(currentGuess)) {
-        //     displayMessage("Not in word list");
-        //     return;
-        // }
-
         if (guesses.includes(currentGuess)) {
             displayMessage("You already guessed that word");
             return;
         }
+
+        // word validation
+        setGameState("validating");
+
+        try {
+            const response = await fetch(
+                `https://api.dictionaryapi.dev/api/v2/entries/en/${currentGuess}`
+            );
+            const responseData = await response.json();
+            if (
+                responseData.title == "No Definitions Found" ||
+                response.status == 404
+            ) {
+                displayMessage("Please enter a valid word");
+                setGameState("playing");
+                return;
+            }
+        } catch (error) {
+            console.error("Error fetching word:", error);
+            displayMessage(
+                "Error validating word. Please check your connection and try again."
+            );
+            setGameState("playing");
+            return;
+        }
+
+        setGameState("playing");
+
+        if (messageTimeoutRef.current) {
+            clearTimeout(messageTimeoutRef.current);
+            messageTimeoutRef.current = null;
+        }
+        setAlertMessage("");
 
         // process guess
         const statuses = calculateGuessStatus(currentGuess, solution);
@@ -116,7 +139,15 @@ export default function Home() {
             // Could save stats here
         }
         // if using localstorage, could remove save state, and add word to seen words
-    }, [currentGuess, displayMessage, gameState, guessStatuses, guesses, keyStatuses, solution]);
+    }, [
+        currentGuess,
+        displayMessage,
+        gameState,
+        guessStatuses,
+        guesses,
+        keyStatuses,
+        solution,
+    ]);
 
     const handlePhysicalKeyPress = useCallback(
         (event: KeyboardEvent) => {
@@ -132,7 +163,7 @@ export default function Home() {
                     setCurrentGuess((prev) => prev + key);
                 }
             }
-            console.log(currentGuess)
+            console.log(currentGuess);
         },
         [gameState, handleSubmit, currentGuess]
     );
@@ -145,12 +176,8 @@ export default function Home() {
         window.addEventListener("keydown", handlePhysicalKeyPress);
         return () => {
             window.removeEventListener("keydown", handlePhysicalKeyPress);
-            if (messageTimeout) {
-                clearTimeout(messageTimeout);
-                // setMessageTimeout(null);
-            }
         };
-    }, [handlePhysicalKeyPress, messageTimeout]);
+    }, [handlePhysicalKeyPress]);
 
     return (
         <div className={(styles.container, styles.page)}>
@@ -168,7 +195,7 @@ export default function Home() {
             </header>
 
             <main>
-                <AlertBox message={alertMessage} />
+                {alertMessage && <AlertBox message={alertMessage} />}
                 <Board
                     guesses={guesses}
                     guessStatuses={guessStatuses}
