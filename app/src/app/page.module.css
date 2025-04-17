@@ -183,16 +183,17 @@ a.secondary {
 }
 
 .restartButton {
+    font-family: inherit;
     margin-top: 1rem;
     padding: 0.5rem 1rem;
     font-size: 1rem;
-    background-color: hsl(115, 57%, 52%);
+    background-color: hsl(115, 72%, 15%);
     border: none;
     border-radius: 0.2rem;
     cursor: pointer;
-    color: black;
+    color: white;
 }
 
 .restartButton:hover {
-    background-color: hsla(115, 57%, 45%);
+    background-color: hsl(115, 72%, 20%);
 }

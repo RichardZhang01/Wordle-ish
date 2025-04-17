@@ -191,7 +191,7 @@ export default function Home() {
 
             <header className={styles.header}>
                 <h1>Wordle-ish</h1>
-                <p style={{ fontSize: "0.8rem", color: "#aaa" }}>{solution}</p>
+                {/* <p style={{ fontSize: "0.8rem", color: "#aaa" }}>{solution}</p> */}
             </header>
 
             <main>
@@ -205,16 +205,12 @@ export default function Home() {
                     onKeyPress={handleVirtualKeyPress}
                     keyStatuses={keyStatuses}
                 />
-
-                {(gameState === "won" || gameState === "lost") && (
-                    <button
-                        onClick={resetGame}
-                        className={styles.restartButton}
-                    >
-                        Play Again
-                    </button>
-                )}
             </main>
+            {(gameState === "won" || gameState === "lost") && (
+                <button onClick={resetGame} className={styles.restartButton}>
+                    ↺ Play Again
+                </button>
+            )}
         </div>
     );
 }
